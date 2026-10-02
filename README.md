@@ -1,22 +1,17 @@
-# kleanthis.mitsioulis.com
+# Kleanthis Mitsioulis: personal site
 
-Static personal site, served by GitHub Pages. No build step.
+Static personal site, served free by GitHub Pages at
+https://kleanthismits.github.io/kleanthis-site/. No build step.
 
 ## Deploy
 
-1. Create a new **public** repo (e.g. `Kleanthismits/kleanthis-site`) and push this folder to `main`.
-2. Repo **Settings → Pages**: Source = *Deploy from a branch*, Branch = `main` / `/ (root)`.
-3. Same page: Custom domain = `kleanthis.mitsioulis.com` (the `CNAME` file already sets this), then tick **Enforce HTTPS** once the certificate is issued.
+Repo **Settings → Pages**: Source = *Deploy from a branch*, Branch = `main` / `/ (root)`.
 
-## DNS
+## Adding a custom domain later
 
-At the DNS provider for `mitsioulis.com`, add:
-
-| Type  | Name        | Value                     |
-|-------|-------------|---------------------------|
-| CNAME | `kleanthis` | `kleanthismits.github.io` |
-
-Propagation can take from minutes to a few hours.
+1. Buy a domain and add a CNAME record pointing to `kleanthismits.github.io`.
+2. Add a `CNAME` file in the repo root containing the domain, and set it under Settings → Pages.
+3. Update the canonical, `og:url` and JSON-LD URLs in `index.html`.
 
 ## Edit
 
