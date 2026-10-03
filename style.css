@@ -88,6 +88,17 @@ h1{margin:26px 0 14px;font:400 clamp(3.2rem,13vw,5.8rem)/.98 var(--serif);letter
 .bullets li{margin:0 0 9px;padding-left:.2em}
 .bullets li::marker{color:var(--accent)}
 
+/* open source */
+.project h3{font:400 clamp(1.7rem,5vw,2.1rem)/1.15 var(--serif);letter-spacing:-.01em}
+.project h3 a{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:.16em}
+.project h3 a:hover{color:var(--accent)}
+.project .org{margin:4px 0 14px}
+.install{margin-top:18px}
+code{font:500 .88em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--soft);
+  padding:.2em .5em;border-radius:6px}
+.install code{display:inline-block;font-size:.95rem;padding:.55em .9em;border-radius:8px}
+.aside{margin-top:22px;color:var(--muted);font-size:.95rem;font-style:italic}
+
 /* skills */
 .skills{display:grid;gap:0}
 .skills>div{padding:18px 0;border-top:1px solid var(--rule)}
