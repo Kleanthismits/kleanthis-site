@@ -176,6 +176,16 @@
       <p>© <span id="y">2026</span> Kleanthis Mitsioulis</p>
     </footer>
   </div>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <script>
+document.getElementById('y').textContent = new Date().getFullYear();
+(function(){
+  var top=document.querySelector('.top');
+  addEventListener('scroll',function(){top.classList.toggle('scrolled',scrollY>8)},{passive:true});
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  document.documentElement.classList.add('js');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.sec').forEach(function(s){io.observe(s)});
+})();
+</script>
 </body>
 </html>
