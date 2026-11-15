@@ -16,4 +16,6 @@ Repo **Settings → Pages**: Source = *Deploy from a branch*, Branch = `main` / 
 ## Edit
 
 - Content: `index.html` (kept in sync by hand with `profile/profile.md` in the private `mark_down_resume` repo)
-- Styling: `style.css`
+- Styling: `style.css` (one design-token block at the top; light and dark follow the OS)
+- Behaviour: `site.js` (menu, scroll reveals, terminal replay, live gem stats, map pins)
+- Fonts: `assets/fonts/` (Instrument Serif and Instrument Sans, SIL OFL 1.1, licences alongside)
