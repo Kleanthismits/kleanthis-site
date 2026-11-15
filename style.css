@@ -210,3 +210,30 @@ code{font:500 .88em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;backgro
   .js .sec.in{opacity:1;transform:none}
 }
 .top.scrolled{border-bottom-color:var(--rule)}
+
+/* print: a clean, ink-friendly one-pager */
+@media print{
+  :root{--bg:#fff;--ink:#000;--muted:#333;--rule:#bbb;--accent:#0B6E69;--card:#fff;--band:#fff;--soft:#eee;--glow:transparent}
+  body{font-size:11pt;line-height:1.45;background:#fff}
+  body::before,.sec::before,.skip,.top,.actions,.ci,.term,.mapwrap,.pindetail,.badge,.aside,.stats{display:none!important}
+  .col{max-width:none;padding:0}
+  .hero{min-height:0;padding:0 0 12pt}
+  .hero>*,.js .sec{opacity:1!important;transform:none!important;animation:none!important;transition:none!important}
+  h1{margin:0 0 4pt;font-size:30pt;background:none;-webkit-text-fill-color:currentColor;color:#000}
+  .role{margin-bottom:8pt}
+  .tagline{font-size:15pt}
+  .meta{margin-top:8pt}
+  .sec{padding:14pt 0 0}
+  .sec>h2{font-size:18pt;margin-bottom:10pt}
+  .sec>h2::after{background:var(--rule)}
+  .job,.project,.skills>div,.facts div{box-shadow:none;background:#fff;break-inside:avoid;padding:10pt 12pt}
+  .job:hover,.skills>div:hover{transform:none}
+  .project{background-image:none}
+  .mail{background:none;font-size:16pt}
+  .contact .actions{display:block!important;margin-top:8pt}
+  .contact .btn{display:block;min-height:0;padding:0;border:0;background:none;color:var(--ink);font-weight:500}
+  .contact .btn[download]{display:none}
+  .contact .btn[href^="https://"]::after{content:": " attr(href);font-weight:400;color:var(--muted)}
+  a{text-decoration:none}
+  .foot{border-top:0;padding-top:12pt}
+}
