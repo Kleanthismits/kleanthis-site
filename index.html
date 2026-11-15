@@ -118,13 +118,65 @@
         <article class="project">
           <h3><a href="https://github.com/Kleanthismits/git_flash" rel="noopener">GitFlash</a></h3>
           <p class="org">A Ruby gem, MIT licensed</p>
-          <p class="prose">A safety net and cleanup tool for git repositories that AI coding agents work in. List branches by status, check them out, delete them safely (protected branches stay protected) and reset to a commit. Every command works interactively in the terminal and also returns JSON, so scripts and AI agents can use it too.</p>
+          <div class="prose">
+            <p>A safety net for git repositories that AI coding agents work in. When an agent is about to run something destructive, like <code>git reset --hard</code>, gitflash saves a snapshot first. One <code>gitflash undo</code> later, HEAD, branches, uncommitted and untracked files are back.</p>
+            <p>It also cleans up the branches and worktrees that parallel agents leave behind. Every command works interactively in a terminal and through one stable, versioned JSON contract, so scripts and agents can use it too.</p>
+          </div>
+          <ul class="stats" id="gem-stats" hidden>
+            <li data-stat="downloads"><strong></strong> downloads on RubyGems</li>
+            <li data-stat="stars"><strong></strong> stars on GitHub</li>
+            <li data-stat="version">latest release <strong></strong></li>
+          </ul>
+
+          <figure class="term">
+            <div class="term-bar">
+              <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="term-title">demo/agent-undo.sh</span>
+              <button class="term-btn" type="button" hidden>Replay</button>
+            </div>
+            <div class="term-body" role="region" aria-label="Terminal transcript of the gitflash undo demo" tabindex="0">
+              <div class="l c">== A repository with uncommitted work</div>
+              <div class="l p">git status --short</div>
+              <div class="l o"> M app.rb</div>
+              <div class="l o">?? notes.txt</div>
+              <div class="l c">== The agent is about to run: git reset --hard &amp;&amp; git clean -fd</div>
+              <div class="l p">&lt;Claude Code hook input&gt; | gitflash hook claude</div>
+              <div class="l o">{</div>
+              <div class="l o">  "hookSpecificOutput": {</div>
+              <div class="l o">    "hookEventName": "PreToolUse",</div>
+              <div class="l o">    "additionalContext": "gitflash saved snapshot 20261102T094036000992-f633 before `git reset --hard &amp;&amp; git clean -fd`. If this discards work that was still needed, restore it with `gitflash undo 20261102T094036000992-f633` (list snapshots with `gitflash snapshots`)."</div>
+              <div class="l o">  }</div>
+              <div class="l o">}</div>
+              <div class="l c">== The command runs. Git alone cannot get this work back</div>
+              <div class="l p">git reset --hard &amp;&amp; git clean -fd</div>
+              <div class="l o">HEAD is now at 1313e78 Initial commit</div>
+              <div class="l o">Removing notes.txt</div>
+              <div class="l p">git status --short</div>
+              <div class="l p">cat app.rb</div>
+              <div class="l o">puts "hello"</div>
+              <div class="l c">== gitflash undo restores the snapshot the hook saved</div>
+              <div class="l p">gitflash undo --yes</div>
+              <div class="l o">Restored snapshot 20261102T094036000992-f633:</div>
+              <div class="l o">* restore tracked, staged and untracked files</div>
+              <div class="l o">Undo with: gitflash undo 20261102T094037415717-1342</div>
+              <div class="l p">git status --short</div>
+              <div class="l o"> M app.rb</div>
+              <div class="l o">?? notes.txt</div>
+              <div class="l p">cat app.rb notes.txt</div>
+              <div class="l o">puts "hello, world"</div>
+              <div class="l o">API_URL=http://localhost:3000</div>
+              <div class="l ok">Uncommitted edit and untracked file are back.</div>
+            </div>
+            <figcaption>Real output of the demo script from the gitflash README. It runs in a throwaway repository and feeds the hook the same input Claude Code sends.</figcaption>
+          </figure>
+
           <p class="install"><code>gem install gitflash</code></p>
           <p class="actions">
             <a class="btn ghost" href="https://github.com/Kleanthismits/git_flash" rel="noopener">Source on GitHub</a>
             <a class="btn ghost" href="https://rubygems.org/gems/gitflash" rel="noopener">View on RubyGems</a>
           </p>
-          <p class="aside">Because an agent with <code>git branch -D</code> and no supervision is a character-building experience.</p>
+          <p class="ci"><a href="https://github.com/Kleanthismits/git_flash/actions/workflows/rspec.yml" rel="noopener"><img src="https://github.com/Kleanthismits/git_flash/actions/workflows/rspec.yml/badge.svg" alt="RSpec workflow status on GitHub Actions" height="20" loading="lazy"></a></p>
+          <p class="aside">Because an agent with <code>git reset --hard</code> and no supervision is a character-building experience.</p>
         </article>
       </section>
 
@@ -251,6 +303,78 @@ document.getElementById('y').textContent = new Date().getFullYear();
     p.addEventListener('click',function(){pick(p)});
     p.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(p)}});
   });
+})();
+// gitflash: live numbers from the RubyGems and GitHub public APIs, cached for an hour
+(function(){
+  var box=document.getElementById('gem-stats');
+  if(!box||!window.fetch)return;
+  var KEY='gitflash-stats',cached=null;
+  try{cached=JSON.parse(sessionStorage.getItem(KEY))}catch(e){}
+  if(cached&&Date.now()-cached.at<36e5)return show(cached);
+  function get(u){return fetch(u,{headers:{Accept:'application/json'}}).then(function(r){if(!r.ok)throw r;return r.json()})}
+  Promise.all([
+    get('https://rubygems.org/api/v1/gems/gitflash.json').catch(function(){return null}),
+    get('https://api.github.com/repos/Kleanthismits/git_flash').catch(function(){return null})
+  ]).then(function(r){
+    var s={at:Date.now(),
+      downloads:r[0]&&r[0].downloads,version:r[0]&&r[0].version,
+      stars:r[1]&&r[1].stargazers_count};
+    try{sessionStorage.setItem(KEY,JSON.stringify(s))}catch(e){}
+    show(s);
+  });
+  function show(s){
+    var any=false;
+    ['downloads','stars','version'].forEach(function(k){
+      var li=box.querySelector('[data-stat="'+k+'"]'),v=s[k];
+      if(v==null){li.remove();return}
+      li.querySelector('strong').textContent=k==='version'?'v'+v:Number(v).toLocaleString('en');
+      any=true;
+    });
+    box.hidden=!any;
+  }
+})();
+// gitflash: replay the demo transcript once it scrolls into view
+(function(){
+  var term=document.querySelector('.term');
+  if(!term||!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var body=term.querySelector('.term-body'),btn=term.querySelector('.term-btn'),
+      lines=[].slice.call(body.children),texts=lines.map(function(l){return l.textContent}),
+      run=0,timer;
+  function reveal(l){
+    l.classList.remove('wait');
+    var bottom=l.offsetTop+l.offsetHeight+18;
+    if(bottom>body.scrollTop+body.clientHeight)body.scrollTop=bottom-body.clientHeight;
+  }
+  function finish(){
+    run++;clearTimeout(timer);
+    lines.forEach(function(l,i){l.textContent=texts[i];l.classList.remove('wait','typing')});
+    body.removeAttribute('aria-busy');btn.textContent='Replay';
+  }
+  function play(){
+    var id=++run,i=0;
+    clearTimeout(timer);
+    lines.forEach(function(l){l.classList.add('wait')});
+    body.scrollTop=0;body.setAttribute('aria-busy','true');btn.textContent='Skip';
+    (function next(){
+      if(id!==run)return;
+      if(i>=lines.length)return finish();
+      var l=lines[i],t=texts[i];i++;
+      if(l.classList.contains('p')){
+        var k=0;l.textContent='';l.classList.add('typing');reveal(l);
+        (function type(){
+          if(id!==run)return;
+          l.textContent=t.slice(0,++k);
+          if(k<t.length)timer=setTimeout(type,24);
+          else{l.classList.remove('typing');timer=setTimeout(next,380)}
+        })();
+      }else{reveal(l);timer=setTimeout(next,l.classList.contains('c')?560:70)}
+    })();
+  }
+  btn.hidden=false;
+  btn.addEventListener('click',function(){body.hasAttribute('aria-busy')?finish():play()});
+  lines.forEach(function(l){l.classList.add('wait')});
+  var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();play()}},{threshold:.35});
+  io.observe(term);
 })();
 </script>
   <script data-goatcounter="https://kleanthis.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>

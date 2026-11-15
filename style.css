@@ -120,6 +120,36 @@ body{overflow-x:clip}
 code{font:500 .88em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--soft);
   padding:.2em .5em;border-radius:6px}
 .install code{display:inline-block;font-size:.95rem;padding:.65em 1em;border-radius:10px;border:1px solid var(--rule)}
+.stats{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.stats li{padding:6px 13px;border:1px solid var(--rule);border-radius:999px;background:var(--bg);font-size:.9rem;color:var(--muted)}
+.stats strong{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.ci{margin-top:16px;line-height:0}
+.ci img{height:20px;width:auto}
+
+/* terminal replay */
+.term{--t-bg:#0E1520;--t-ink:#D9E1EC;--t-dim:#7D8AA0;--t-acc:#5CD3C8;
+  margin:24px 0 0;border-radius:14px;overflow:hidden;background:var(--t-bg);color:var(--t-ink);
+  border:1px solid color-mix(in srgb,var(--t-bg) 80%,var(--rule))}
+.term-bar{display:flex;align-items:center;gap:12px;padding:8px 10px 8px 14px;border-bottom:1px solid #1E2836}
+.term-dots{display:flex;gap:6px}
+.term-dots i{width:10px;height:10px;border-radius:50%;background:#2A3546}
+.term-title{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:500 .8rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--t-dim)}
+.term-btn{font:600 .82rem var(--sans);color:var(--t-ink);background:transparent;border:1px solid #2A3546;border-radius:8px;
+  min-height:36px;padding:6px 12px;cursor:pointer;transition:border-color .2s,color .2s}
+.term-btn:hover{border-color:var(--t-acc);color:var(--t-acc)}
+.term-body{padding:14px 16px 18px;font:400 .8rem/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  max-height:26rem;overflow-y:auto;position:relative}
+.term .l{white-space:pre-wrap;overflow-wrap:anywhere}
+.term-body:focus-visible{outline-offset:-3px}
+.term .c{color:var(--t-dim)}
+.term .c:not(:first-child){margin-top:12px}
+.term .p::before{content:"$ ";color:var(--t-acc)}
+.term .ok{margin-top:12px;color:var(--t-acc);font-weight:600}
+.term .wait{visibility:hidden}
+.term .typing::after{content:"";display:inline-block;width:.55em;height:1.05em;margin-left:1px;vertical-align:-.15em;background:var(--t-acc)}
+.term figcaption{padding:10px 16px 12px;border-top:1px solid #1E2836;font-size:.85rem;color:var(--t-dim)}
+@media (min-width:640px){.term-body{font-size:.84rem}}
+
 .aside{margin-top:22px;color:var(--muted);font-size:.95rem;font-style:italic}
 
 /* skills */
