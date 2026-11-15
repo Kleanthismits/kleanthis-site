@@ -66,6 +66,10 @@ h1{background:linear-gradient(120deg,var(--ink) 55%,var(--accent));-webkit-backg
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
 .btn.ghost:hover{border-color:var(--accent);background:var(--soft)}
 
+.meta{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:.95rem}
+.meta li{display:inline-flex;align-items:center;gap:8px}
+.meta li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.7}
+
 .facts{display:grid;gap:12px;margin:40px 0 0}
 .facts div{padding:18px 20px;background:var(--card);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow)}
 .facts dt{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
